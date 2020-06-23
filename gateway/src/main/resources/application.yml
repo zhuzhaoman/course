@@ -4,6 +4,16 @@ server:
 spring:
   application:
     name: gateway
+  # 路由转发
+  cloud:
+    gateway:
+      routes[0]:
+        id: system
+        uri: http://127.0.0.1:8001
+        predicates[0]:
+          name: Path
+          args[0]: /system/**
+
 
 eureka:
   client:
