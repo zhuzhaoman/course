@@ -1,12 +1,12 @@
 package com.course.system.controller;
 
-import com.course.system.pojo.Test;
-import com.course.system.service.TestService;
+import com.course.server.pojo.Test;
+import com.course.server.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -18,7 +18,7 @@ import java.util.List;
 @RestController
 public class TestController {
 
-    @Autowired
+    @Resource
     private TestService testService;
 
     @GetMapping("/test")
