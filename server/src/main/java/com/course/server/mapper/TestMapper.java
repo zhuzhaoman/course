@@ -1,15 +1,22 @@
 package com.course.server.mapper;
 
 import com.course.server.pojo.Test;
-
+import com.course.server.pojo.TestExample;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
-/**
- * @author zhuzhaoman
- * @date 2020/6/24 0024 13:13
- * @description 描述
- */
 public interface TestMapper {
+    long countByExample(TestExample example);
 
-    public List<Test> list();
+    int deleteByExample(TestExample example);
+
+    int insert(Test record);
+
+    int insertSelective(Test record);
+
+    List<Test> selectByExample(TestExample example);
+
+    int updateByExampleSelective(@Param("record") Test record, @Param("example") TestExample example);
+
+    int updateByExample(@Param("record") Test record, @Param("example") TestExample example);
 }
