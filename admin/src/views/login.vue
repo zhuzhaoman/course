@@ -76,8 +76,11 @@
         name: "login",
         data() {
             return {
-
             }
+        },
+        mounted() {
+            $('body').removeClass('no-skin')
+            $('body').attr('class', 'login-layout light-login');
         },
         methods: {
             login() {
