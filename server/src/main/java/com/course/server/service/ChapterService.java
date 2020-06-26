@@ -1,13 +1,12 @@
 package com.course.server.service;
 
+import com.course.server.dto.ChapterDto;
 import com.course.server.mapper.ChapterMapper;
-import com.course.server.mapper.TestMapper;
 import com.course.server.pojo.Chapter;
-import com.course.server.pojo.ChapterExample;
-import com.course.server.pojo.Test;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,7 +21,15 @@ public class ChapterService {
     @Resource
     private ChapterMapper chapterMapper;
 
-    public List<Chapter> list() {
-        return chapterMapper.selectByExample(null);
+    public List<ChapterDto> list() {
+        List<Chapter> chapterList = chapterMapper.selectByExample(null);
+        List<ChapterDto> chapterDtoList = new ArrayList<>();
+        for (Chapter chapter: chapterList){
+            ChapterDto chapterDto = new ChapterDto();
+            BeanUtils.copyProperties(chapter, chapterDto);
+            chapterDtoList.add(chapterDto);
+        }
+
+        return chapterDtoList;
     }
 }

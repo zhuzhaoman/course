@@ -1,5 +1,6 @@
-package com.course.business.controller;
+package com.course.business.controller.admin;
 
+import com.course.server.dto.ChapterDto;
 import com.course.server.pojo.Chapter;
 import com.course.server.service.ChapterService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,13 +15,14 @@ import java.util.List;
  * @description 描述
  */
 @RestController
+@RequestMapping("/admin")
 public class ChapterController {
 
     @Resource
     private ChapterService chapterService;
 
     @RequestMapping("/list")
-    public List<Chapter> list() {
+    public List<ChapterDto> list() {
         return chapterService.list();
     }
 }
