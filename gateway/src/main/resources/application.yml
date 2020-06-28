@@ -15,7 +15,7 @@ spring:
           args[0]: /system/**
       routes[1]:
         id: business
-        uri: http://127.0.0.1:8002
+        uri: lb://business
         predicates[0]:
           name: Path
           args[0]: /business/**
