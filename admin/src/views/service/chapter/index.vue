@@ -41,8 +41,9 @@
     },
     methods: {
       getList() {
-        list().then(res => {
-          this.chapter = res.data
+        list({page: 2, size: 1}).then(res => {
+          console.log(res)
+          this.chapter = res.data.list
         })
       }
     }

@@ -1,8 +1,9 @@
 import request from '@/utils/request'
 
-export function list() {
+export function list(data) {
   return request({
     url: '/business/admin/list',
-    method: 'get'
+    method: 'post',
+    data
   })
 }

@@ -1,12 +1,10 @@
 package com.course.business.controller.admin;
 
 import com.course.server.dto.ChapterDto;
+import com.course.server.dto.PageDto;
 import com.course.server.service.ChapterService;
 import com.course.server.utils.JSONResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -23,10 +21,10 @@ public class ChapterController {
     @Resource
     private ChapterService chapterService;
 
-    @RequestMapping("/list")
-    public JSONResult list() {
-        List<ChapterDto> chapterDtoList = chapterService.list();
-        return JSONResult.ok(chapterDtoList);
+    @PostMapping("/list")
+    public JSONResult list(@RequestBody PageDto pageDto) {
+        chapterService.list(pageDto);
+        return JSONResult.ok(pageDto);
     }
 
     @PostMapping("/login")
