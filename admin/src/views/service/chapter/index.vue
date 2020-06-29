@@ -1,7 +1,9 @@
 <template>
   <div class="container">
-    <el-button type="primary" icon="el-icon-refresh" @click="refresh()">刷新</el-button>
+    <el-button type="primary" icon="el-icon-refresh" @click="handleRefresh()">刷新</el-button>
+    <el-button type="primary" icon="el-icon-document-add" @click="handleAdd()">添加</el-button>
 
+    <!-- 表单 -->
     <el-table
       :data="chapter"
       border
@@ -30,6 +32,7 @@
       </el-table-column>
     </el-table>
 
+    <!-- 分页 -->
     <el-pagination
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
@@ -39,6 +42,25 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="total">
     </el-pagination>
+
+    <!-- 添加弹层 -->
+    <el-dialog
+      title="大章添加"
+      :visible.sync="dialogVisible"
+      width="50%">
+      <el-form ref="chapterForm" :model="chapterForm" label-width="80px">
+        <el-form-item label="课程名称">
+          <el-input v-model="chapterForm.name"></el-input>
+        </el-form-item>
+        <el-form-item label="课程ID">
+          <el-input v-model="chapterForm.courseId"></el-input>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -52,7 +74,9 @@
         loading: true,
         page: 1,
         size: 5,
-        total: 0
+        total: 0,
+        dialogVisible: false,
+        chapterForm: { name: '', courseId: '' }
       }
     },
     mounted() {
@@ -68,8 +92,11 @@
           this.loading = false
         })
       },
-      refresh() {
+      handleRefresh() {
         this.getList()
+      },
+      handleAdd() {
+        this.dialogVisible = true
       },
       handleSizeChange(val) {
         this.size = val
