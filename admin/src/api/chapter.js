@@ -7,3 +7,11 @@ export function list(data) {
     data
   })
 }
+
+export function save(data) {
+  return request({
+    url: '/business/admin/save',
+    method: 'post',
+    data
+  })
+}

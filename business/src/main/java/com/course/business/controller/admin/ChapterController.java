@@ -27,6 +27,13 @@ public class ChapterController {
         return JSONResult.ok(pageDto);
     }
 
+    @PostMapping("/save")
+    public JSONResult save(@RequestBody ChapterDto chapterDto) {
+        boolean status = chapterService.save(chapterDto);
+
+        return status ? JSONResult.ok() : JSONResult.errorMsg("添加失败！");
+    }
+
     @PostMapping("/login")
     public JSONResult login() {
         Map<String, String> map = new HashMap();

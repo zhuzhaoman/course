@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author zhuzhaoman
@@ -45,5 +46,21 @@ public class ChapterService {
 
         // 设置DTO信息
         pageDto.setList(chapterDtoList);
+    }
+
+    /**
+     * 添加大章
+     * @param chapterDto
+     */
+    public boolean save(ChapterDto chapterDto) {
+        String id = UUID.randomUUID().toString().replaceAll("-", "");
+
+        Chapter chapter = new Chapter();
+        BeanUtils.copyProperties(chapterDto, chapter);
+        chapter.setId(id);
+
+        int status = chapterMapper.insert(chapter);
+
+        return status > 0 ? true : false;
     }
 }
