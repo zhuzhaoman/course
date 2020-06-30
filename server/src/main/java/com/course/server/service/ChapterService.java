@@ -4,10 +4,13 @@ import com.course.server.dto.ChapterDto;
 import com.course.server.dto.PageDto;
 import com.course.server.mapper.ChapterMapper;
 import com.course.server.pojo.Chapter;
+import com.course.server.utils.CopyUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,29 +40,51 @@ public class ChapterService {
         PageInfo<Chapter> pageInfo = new PageInfo<>(chapterList);
         pageDto.setTotal(pageInfo.getTotal());
 
-        List<ChapterDto> chapterDtoList = new ArrayList<>();
-        for (Chapter chapter: chapterList){
-            ChapterDto chapterDto = new ChapterDto();
-            BeanUtils.copyProperties(chapter, chapterDto);
-            chapterDtoList.add(chapterDto);
-        }
+        List<ChapterDto> chapterDtoList = CopyUtil.copyList(chapterList, ChapterDto.class);
 
         // 设置DTO信息
         pageDto.setList(chapterDtoList);
     }
 
     /**
-     * 添加大章
+     * 保存大章
      * @param chapterDto
      */
     public boolean save(ChapterDto chapterDto) {
-        String id = UUID.randomUUID().toString().replaceAll("-", "");
 
-        Chapter chapter = new Chapter();
-        BeanUtils.copyProperties(chapterDto, chapter);
+        Chapter chapter = CopyUtil.copy(chapterDto, Chapter.class);
+
+        /**
+         * 判断id是否为空
+         */
+        if (StringUtils.isEmpty(chapterDto.getId())) {
+            return this.insert(chapter); // 添加
+        } else {
+            return this.update(chapter); // 修改
+        }
+    }
+
+    /**
+     * 添加大章
+     * @param chapter
+     */
+    private boolean insert(Chapter chapter) {
+
+        String id = UUID.randomUUID().toString().replaceAll("-", "");
         chapter.setId(id);
 
         int status = chapterMapper.insert(chapter);
+
+        return status > 0 ? true : false;
+    }
+
+    /**
+     * 修改大章
+     * @param chapter
+     */
+    private boolean update(Chapter chapter) {
+
+        int status = chapterMapper.updateByPrimaryKey(chapter);
 
         return status > 0 ? true : false;
     }

@@ -25,12 +25,10 @@
         label="大章名称">
       </el-table-column>
       <el-table-column
-        fixed="right"
-        label="操作"
-        width="200">
+        label="操作">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-          <el-button type="text" size="small">编辑</el-button>
+<!--          <el-button type="primary" size="small" @click="handleClick(scope.row)" >查看</el-button>-->
+          <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.row)">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -62,7 +60,7 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button @click="handleClear()">取 消</el-button>
         <el-button type="primary" @click="saveChapter()">确 定</el-button>
       </span>
     </el-dialog>
@@ -107,14 +105,11 @@
           return
         }
 
-        // 关闭弹层
-        this.dialogVisible = false
-
         // 保存数据
-        save(this.chapterForm).then(res => {
+        save(chapterForm).then(res => {
           if (res.status === 200) {
             this.$message({
-              message: '添加大章成功！',
+              message: res.msg,
               type: 'success'
             });
           } else {
@@ -129,13 +124,21 @@
         });
 
         // 清空数据
-        this.chapterForm = { name: '', courseId: '' }
+        this.handleClear()
       },
       handleRefresh() {
         this.getList()
       },
       handleAdd() {
         this.dialogVisible = true
+      },
+      handleEdit(data) {
+        this.chapterForm = data
+        this.dialogVisible = true
+      },
+      handleClear() {
+        this.dialogVisible = false
+        this.chapterForm = { name: '', courseId: '' }
       },
       handleSizeChange(val) {
         this.size = val

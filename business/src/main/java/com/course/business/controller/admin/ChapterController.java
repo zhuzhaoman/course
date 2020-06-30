@@ -31,7 +31,7 @@ public class ChapterController {
     public JSONResult save(@RequestBody ChapterDto chapterDto) {
         boolean status = chapterService.save(chapterDto);
 
-        return status ? JSONResult.ok() : JSONResult.errorMsg("添加失败！");
+        return status ? JSONResult.ok("保存成功！") : JSONResult.errorMsg("保存失败！");
     }
 
     @PostMapping("/login")
