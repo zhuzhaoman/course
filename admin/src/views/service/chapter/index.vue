@@ -27,8 +27,8 @@
       <el-table-column
         label="操作">
         <template slot-scope="scope">
-<!--          <el-button type="primary" size="small" @click="handleClick(scope.row)" >查看</el-button>-->
           <el-button type="primary" size="mini" icon="el-icon-edit" @click="handleEdit(scope.row)">编辑</el-button>
+          <el-button type="danger" size="mini" icon="el-icon-delete" @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -68,7 +68,7 @@
 </template>
 
 <script>
-  import { list, save } from "../../../api/chapter";
+  import { list, save, del } from "../../../api/chapter";
   export default {
     name: "index",
     data() {
@@ -86,6 +86,9 @@
       this.getList()
     },
     methods: {
+      /**
+       * 获得大章列表
+       */
       getList() {
         this.loading = true
 
@@ -95,6 +98,9 @@
           this.loading = false
         })
       },
+      /**
+       * 保存chapter（添加、修改）
+       */
       saveChapter() {
         let chapterForm = this.chapterForm
         if ((chapterForm.name.trim() === '') || (chapterForm.courseId.trim() === '')) {
@@ -132,9 +138,36 @@
       handleAdd() {
         this.dialogVisible = true
       },
-      handleEdit(data) {
-        this.chapterForm = data
+      handleEdit(chapter) {
+        this.chapterForm = chapter
         this.dialogVisible = true
+      },
+      handleDelete(chapter) {
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.deleteChapter(chapter.id)
+        }).catch(() => {
+        });
+      },
+      deleteChapter(id) {
+        del(id).then(res => {
+          if (res.status === 200) {
+            this.$message({
+              message: res.msg,
+              type: 'success'
+            });
+          } else {
+            this.$message({
+              message: res.msg,
+              type: 'error'
+            });
+          }
+
+          this.getList()
+        })
       },
       handleClear() {
         this.dialogVisible = false

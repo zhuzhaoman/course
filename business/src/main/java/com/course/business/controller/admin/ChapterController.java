@@ -15,7 +15,7 @@ import java.util.*;
  * @description 描述
  */
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/admin/chapter")
 public class ChapterController {
 
     @Resource
@@ -32,6 +32,13 @@ public class ChapterController {
         boolean status = chapterService.save(chapterDto);
 
         return status ? JSONResult.ok("保存成功！") : JSONResult.errorMsg("保存失败！");
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public JSONResult delete(@PathVariable String id) {
+        boolean status = chapterService.delete(id);
+
+        return status ? JSONResult.ok("删除成功！") : JSONResult.errorMsg("删除失败！");
     }
 
     @PostMapping("/login")

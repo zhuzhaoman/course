@@ -49,6 +49,7 @@ public class ChapterService {
     /**
      * 保存大章
      * @param chapterDto
+     * @return
      */
     public boolean save(ChapterDto chapterDto) {
 
@@ -67,6 +68,7 @@ public class ChapterService {
     /**
      * 添加大章
      * @param chapter
+     * @return
      */
     private boolean insert(Chapter chapter) {
 
@@ -81,11 +83,22 @@ public class ChapterService {
     /**
      * 修改大章
      * @param chapter
+     * @return
      */
     private boolean update(Chapter chapter) {
 
         int status = chapterMapper.updateByPrimaryKey(chapter);
 
+        return status > 0 ? true : false;
+    }
+
+    /**
+     * 删除大章
+     * @param id
+     * @return
+     */
+    public boolean delete(String id) {
+        int status = chapterMapper.deleteByPrimaryKey(id);
         return status > 0 ? true : false;
     }
 }
