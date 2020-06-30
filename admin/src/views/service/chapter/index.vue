@@ -113,18 +113,6 @@
 
         // 保存数据
         save(chapterForm).then(res => {
-          if (res.status === 200) {
-            this.$message({
-              message: res.msg,
-              type: 'success'
-            });
-          } else {
-            this.$message({
-              message: res.msg,
-              type: 'error'
-            });
-          }
-
           // 延迟更新列表
           this.getList()
         });
@@ -154,18 +142,6 @@
       },
       deleteChapter(id) {
         del(id).then(res => {
-          if (res.status === 200) {
-            this.$message({
-              message: res.msg,
-              type: 'success'
-            });
-          } else {
-            this.$message({
-              message: res.msg,
-              type: 'error'
-            });
-          }
-
           this.getList()
         })
       },

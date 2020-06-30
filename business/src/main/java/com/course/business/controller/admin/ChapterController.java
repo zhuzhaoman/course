@@ -4,6 +4,7 @@ import com.course.server.dto.ChapterDto;
 import com.course.server.dto.PageDto;
 import com.course.server.service.ChapterService;
 import com.course.server.utils.JSONResult;
+import com.course.server.utils.ValidatorUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -29,6 +30,12 @@ public class ChapterController {
 
     @PostMapping("/save")
     public JSONResult save(@RequestBody ChapterDto chapterDto) {
+
+        // 参数校验
+        ValidatorUtil.require(chapterDto.getName(), "名称");
+        ValidatorUtil.require(chapterDto.getCourseId(), "课程ID");
+        ValidatorUtil.length(chapterDto.getCourseId(), "课程ID", 1, 8);
+
         boolean status = chapterService.save(chapterDto);
 
         return status ? JSONResult.ok("保存成功！") : JSONResult.errorMsg("保存失败！");

@@ -26,23 +26,30 @@ service.interceptors.response.use(
   response => {
     const res = response.data
 
-    if (res.status !== 200) {
-      Message({
-        message: res.message || '请求失败',
-        type: 'error',
-        duration: 5 * 1000
-      })
-
-      return Promise.reject(new Error(res.message || 'Error'))
-    } else {
+    if (res.status === 200) {
+      // 访问接口成功并且无信息则不显示提示框
+      if (res.msg !== "OK") {
+        Message({
+          message: res.msg,
+          type: 'success',
+          duration: 3 * 1000
+        })
+      }
       return res
+    } else {
+      Message({
+        message: res.msg,
+        type: 'error',
+        duration: 3 * 1000
+      })
+      return Promise.reject(new Error(res.msg || 'Error'))
     }
   },
   error => {
     Message({
       message: error.message,
       type: 'error',
-      duration: 5 * 1000
+      duration: 3 * 1000
     })
     return Promise.reject(error)
   }
