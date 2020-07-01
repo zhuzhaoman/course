@@ -41,8 +41,10 @@ public class LogAspect {
 
     @Before("controllerPointcut()")
     public void doBefore(JoinPoint joinPoint) {
+        String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+        System.out.println("##############" + uuid);
         // 日志编号
-        MDC.put("UUID", UUID.randomUUID().toString().replaceAll("-", ""));
+        MDC.put("UUID", uuid.substring(0,8));
 
         // 开始打印请求日志
         ServletRequestAttributes attributes =
