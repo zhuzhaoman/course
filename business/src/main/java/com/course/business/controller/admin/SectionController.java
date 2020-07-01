@@ -38,7 +38,7 @@ public class SectionController {
     public JSONResult save(@RequestBody SectionDto sectionDto) {
 
         // 参数校验
-        ValidatorUtil.require(sectionDto.getName(), "名称");
+        //ValidatorUtil.require(sectionDto.getName(), "名称");
         ValidatorUtil.require(sectionDto.getCourseId(), "课程ID");
         ValidatorUtil.length(sectionDto.getCourseId(), "课程ID", 1, 8);
 
