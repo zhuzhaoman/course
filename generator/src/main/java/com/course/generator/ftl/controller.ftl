@@ -1,4 +1,4 @@
-package com.course.business.controller.admin;
+package com.course.${module}.controller.admin;
 
 import com.course.server.aspect.LogAspect;
 import com.course.server.dto.${Pojo}Dto;
@@ -23,7 +23,7 @@ import java.util.*;
 public class ${Pojo}Controller {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LogAspect.class);
-    public static final String BUSINESS_NAME = "大章";
+    public static final String BUSINESS_NAME = "${tableNameCn}";
 
     @Resource
     private ${Pojo}Service ${pojo}Service;

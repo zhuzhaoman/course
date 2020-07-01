@@ -23,7 +23,7 @@ import java.util.*;
 public class SectionController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LogAspect.class);
-    public static final String BUSINESS_NAME = "大章";
+    public static final String BUSINESS_NAME = "小节";
 
     @Resource
     private SectionService sectionService;
@@ -38,9 +38,9 @@ public class SectionController {
     public JSONResult save(@RequestBody SectionDto sectionDto) {
 
         // 参数校验
-//        ValidatorUtil.require(sectionDto.getName(), "名称");
-//        ValidatorUtil.require(sectionDto.getCourseId(), "课程ID");
-//        ValidatorUtil.length(sectionDto.getCourseId(), "课程ID", 1, 8);
+        ValidatorUtil.require(sectionDto.getName(), "名称");
+        ValidatorUtil.require(sectionDto.getCourseId(), "课程ID");
+        ValidatorUtil.length(sectionDto.getCourseId(), "课程ID", 1, 8);
 
         boolean status = sectionService.save(sectionDto);
 
@@ -52,5 +52,22 @@ public class SectionController {
         boolean status = sectionService.delete(id);
 
         return status ? JSONResult.ok("删除成功！") : JSONResult.errorMsg("删除失败！");
+    }
+
+    @PostMapping("/login")
+    public JSONResult login() {
+        Map<String, String> map = new HashMap();
+        map.put("token", "admin-token");
+        return JSONResult.ok(map);
+    }
+
+    @GetMapping("/info")
+    public JSONResult info() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("roles", Arrays.asList("admin"));
+        map.put("introduction", "I am a super administrator");
+        map.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
+        map.put("name", "Super Admin");
+        return JSONResult.ok(map);
     }
 }
