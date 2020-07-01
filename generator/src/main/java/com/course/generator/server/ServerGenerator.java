@@ -2,7 +2,6 @@ package com.course.generator.server;
 
 import com.course.generator.utils.FreemarkerUtil;
 import freemarker.template.TemplateException;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +14,7 @@ import java.util.Map;
 public class ServerGenerator {
 
     static String toServicePath = "server/src/main/java/com/course/server/service/";
+    static String toControllerPath = "business/src/main/java/com/course/business/controller/admin/";
 
     public static void main(String[] args) throws IOException, TemplateException {
         String Pojo = "Section";
@@ -23,7 +23,12 @@ public class ServerGenerator {
         map.put("Pojo", Pojo);
         map.put("pojo", pojo);
 
-        FreemarkerUtil.initConfig("service.ftl");
-        FreemarkerUtil.generator(toServicePath + Pojo + "Service.java", map);
+        // 生成service
+        // FreemarkerUtil.initConfig("service.ftl");
+        // FreemarkerUtil.generator(toServicePath + Pojo + "Service.java", map);
+
+        // 生成controller
+        FreemarkerUtil.initConfig("controller.ftl");
+        FreemarkerUtil.generator(toControllerPath + Pojo + "Controller.java", map);
     }
 }
